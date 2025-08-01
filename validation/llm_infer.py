@@ -10,7 +10,7 @@ import random
 import math
 from sklearn.metrics import roc_auc_score
 
-# 🔥 禁用 peft UserWarning
+# 🔥 peft UserWarning
 warnings.filterwarnings("ignore", category=UserWarning, module="peft")
 
 class SFTInferWrapper:
@@ -54,14 +54,12 @@ class SFTInferWrapper:
         self.dataset = HFDataset.from_list(list(self.test_file))
 
     def extract_ground_truth(self, prompt_text):
-        """直接从prompt中提取 '### Output:' 后面整体作为Ground Truth"""
         if "### Output:" in prompt_text:
             return prompt_text.split("### Output:")[1].strip()
         else:
             return None
 
     def extract_prediction(self, prediction_text):
-        """直接从模型预测结果中提取 '### Output:' 后面整体作为Prediction"""
         if "### Output:" in prediction_text:
             return prediction_text.split("### Output:")[1].strip()
         else:
@@ -135,16 +133,16 @@ class SFTInferWrapper:
         print("🟢 Starting inference...")
         outputs = []
 
-        # 🔥 定义统一的生成参数
+        # 🔥 
         generation_config = GenerationConfig(
             max_new_tokens=self.max_new_tokens,
         )
 
-        # 🔥 处理随机选择
+        # 🔥
         dataset_to_infer = self.dataset
         if self.test_batch is not None:
             n_samples = min(self.test_batch, len(self.dataset))
-            indices = random.sample(range(len(self.dataset)), n_samples)  # ✅ 随机采样index
+            indices = random.sample(range(len(self.dataset)), n_samples) 
             dataset_to_infer = self.dataset.select(indices)
 
         for sample in tqdm(dataset_to_infer, desc="Inferencing"):
@@ -155,13 +153,13 @@ class SFTInferWrapper:
             inputs = self.tokenizer(
                 prompt_text, return_tensors="pt",
                 truncation=True, max_length=self.max_seq_length,
-                padding="longest"  # ✅ 确保attention_mask存在
+                padding="longest" 
             ).to(self.model.device)
 
             with torch.no_grad():
                 generation_output = self.model.generate(
                     input_ids=inputs["input_ids"],
-                    attention_mask=inputs["attention_mask"],  # ✅ 必须加！
+                    attention_mask=inputs["attention_mask"],  
                     generation_config=generation_config,
                 )
 
@@ -171,7 +169,7 @@ class SFTInferWrapper:
                 "ground_truth": gt.strip(),
                 "prediction": output_text.strip(),
             })
-        # 🔥 推理完成后，计算HR
+        # 🔥 
         if self.hit == 1:
             metrics = self.evaluate_auc(outputs)
         elif self.hit ==3:
