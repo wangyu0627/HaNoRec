@@ -10,15 +10,15 @@ import argparse
 def parse_args():
     parser = argparse.ArgumentParser(description="LoRA SFT for Microvideo Recommendation")
 
-    # 控制流程
-    parser.add_argument("--do_train", action="store_true", help="是否进行训练")
-    parser.add_argument("--do_predict", action="store_true", help="是否进行推理")
-    parser.add_argument("--training_mode", choices=["sft", "dpo"], default="sft", help="选择训练模式：sft 或 dpo")
+    # 
+    parser.add_argument("--do_train", action="store_true", help="")
+    parser.add_argument("--do_predict", action="store_true", help="")
+    parser.add_argument("--training_mode", choices=["sft", "dpo"], default="sft", help="sft or dpo")
 
-    # 数据集名称参数
-    parser.add_argument("--dataset", type=str, default="microlens", help="指定数据集名称，例如 microlens 或 other_dataset")
+    # 
+    parser.add_argument("--dataset", type=str, default="microlens", help="dataset")
 
-    # 预设路径模板（会在解析后动态替换）
+    # 
     parser.add_argument("--train_path", type=str)
     parser.add_argument("--val_path", type=str)
     parser.add_argument("--test_path", type=str)
@@ -29,26 +29,26 @@ def parse_args():
     parser.add_argument("--lora_name", type=str)
     parser.add_argument("--output_dir", type=str)
 
-    # 其他数据参数
-    parser.add_argument("--max_item_id", type=int, default=None, help="数据集中物品ID最大值")
+    # 
+    parser.add_argument("--max_item_id", type=int, default=None, help="")
     parser.add_argument("--num_negatives", type=int, default=7)
     parser.add_argument("--hit", type=int, default=1)
 
-    # 模型相关
+    # 
     parser.add_argument("--model_name", type=str, default="Qwen-2.5-3B-Instruct")
     parser.add_argument("--max_tokens", type=int, default=1024)
 
-    # 训练参数
+    # 
     parser.add_argument("--train_sample_size", type=int, default=None, help="limit training samples")
     parser.add_argument("--seed", type=int, default=2025)
 
-    # 推理参数
+    # 
     parser.add_argument("--max_new_tokens", type=int, default=200)
     parser.add_argument("--test_batch", type=int, default=100)
 
     args = parser.parse_args()
 
-    # 根据 dataset 参数动态构造路径
+    # 
     base = args.dataset
     training_mode = args.training_mode
     hit = args.hit
