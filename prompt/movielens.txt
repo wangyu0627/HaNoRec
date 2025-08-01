@@ -1,0 +1,5 @@
+The user has watched the following movies:
+[seq].
+
+Please write a movie that the user may watch. Below are the candidate movies:
+[candidates].

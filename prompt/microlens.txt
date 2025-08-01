@@ -1,0 +1,5 @@
+The user has watched the following micro-videos:
+[seq].
+
+Please write a micro-video that the user may watch. Below are the candidate micro-videos:
+[candidates].
