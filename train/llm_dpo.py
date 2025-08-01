@@ -36,7 +36,6 @@ class DPOTrainerWrapper:
         self.tokenizer.pad_token_id = self.tokenizer.eos_token_id = self.tokenizer.convert_tokens_to_ids("<|endoftext|>")
         self.tokenizer.pad_token = self.tokenizer.eos_token = "<|endoftext|>"
 
-        # 加载基础模型（非量化，使用 bf16）
         self.model = AutoModelForCausalLM.from_pretrained(
             self.model_name,
             torch_dtype=torch.bfloat16,
@@ -55,7 +54,6 @@ class DPOTrainerWrapper:
         self.model = get_peft_model(self.model, self.peft_config)
         self.model.print_trainable_parameters()  # 可选：打印 LoRA 层参数数量
 
-        # 加载参考模型（冻结 LoRA，或直接加载 base）
         self.model_ref = AutoModelForCausalLM.from_pretrained(
             self.model_name,
             torch_dtype=torch.float16
