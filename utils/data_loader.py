@@ -164,12 +164,12 @@ class InteractionDPODataset(Dataset):
             candidates = list(negatives) + [next_item]
             random.shuffle(candidates)
 
-            # 构建 prompt 和输出文本
+            # 
             seq_titles = [self.item2title.get(i, f"[unknown {i}]") for i in seq]
             cand_titles = [self.item2title.get(i, f"[unknown {i}]") for i in candidates]
             next_title = self.item2title.get(next_item, f"[unknown {next_item}]")
 
-            # 随机从负例中选一个
+            # 
             rejected_item = random.choice(list(negatives))
             rejected_title = self.item2title.get(rejected_item, f"[unknown {rejected_item}]")
 
@@ -317,26 +317,23 @@ class MultimodalInteractionSFTDataset(Dataset):
                 user_prompt = self.prompt_template.replace("[seq]", seq_str).replace("[candidates]", cand_str)
                 model_response = f'"{next_str}"'
 
-                # 直接在这里处理好最终格式
+                # 
                 instruction = (
                     "Given the title of a list of the user's recently enjoyed, please recommend a new item that the user may like. "
                     "Only output the title of the selected candidate item, without any additional explanation or description.")
                 user_prompt = instruction + user_prompt
 
-                # ✅ 收集需要的图片路径
                 images = []
                 for item_id in seq:
                     img_path = os.path.join(self.image_path, f"{item_id}.jpg")
 
-                    # 🔵 检查图片是否存在
                     if os.path.exists(img_path):
                         images.append(img_path)
                     else:
-                        # 🔵 如果不存在，放一个空白图片路径（可以是固定位置的 empty.jpg）
                         empty_img_path = os.path.join(self.image_path, "627.jpg")
                         images.append(empty_img_path)
 
-                # 🔥 把 user_prompt 和 model_response 打包成 sample
+
                 sample = {
                     "messages": [
                         {
@@ -348,7 +345,7 @@ class MultimodalInteractionSFTDataset(Dataset):
                             "content": model_response
                         }
                     ],
-                    "images": images  # ✅ 加上这一行
+                    "images": images  # 
                 }
 
                 self.samples.append(sample)
@@ -362,7 +359,6 @@ class MultimodalInteractionSFTDataset(Dataset):
     def save_dataset(self, dataset, save_path):
         os.makedirs(os.path.dirname(save_path), exist_ok=True)
 
-        # 🔍 如果是自定义 Dataset 类（有 samples），就取 samples；否则就当 list 保存
         data_to_save = dataset.samples if hasattr(dataset, "samples") else dataset
 
         with open(save_path, "w", encoding="utf-8") as f:
