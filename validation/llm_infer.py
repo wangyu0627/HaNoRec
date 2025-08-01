@@ -63,7 +63,7 @@ class SFTInferWrapper:
         if "### Output:" in prediction_text:
             return prediction_text.split("### Output:")[1].strip()
         else:
-            return prediction_text.strip()  # 如果生成里没有Output字段，就整体strip
+            return prediction_text.strip()  
 
     def evaluate_auc(self, outputs):
         y_true = []
