@@ -26,9 +26,9 @@ def merge_lora(base_model_name, sft_lora_path, save_path):
     print("✅ Merge and save completed.")
 
 if __name__ == "__main__":
-    # 👉 根据你的实际路径调整以下参数
-    base_model_name = "/data/wy/MLLMRec/Qwen-2.5-3B-Instruct"  # or absolute path to HF model
-    sft_lora_path = "/data/wy/MLLMRec/checkpoints/netflix/sft_3_lora_qwen"
-    save_path = "/data/wy/MLLMRec/Qwen-2.5-3B-Instruct-SFT-Netflix_3"
+    # 👉 
+    base_model_name = "/data/my_name/MLLMRec/Qwen-2.5-3B-Instruct"  # or absolute path to HF model
+    sft_lora_path = "/data/my_name/MLLMRec/checkpoints/netflix/sft_3_lora_qwen"
+    save_path = "/data/my_name/MLLMRec/Qwen-2.5-3B-Instruct-SFT-Netflix_3"
 
     merge_lora(base_model_name, sft_lora_path, save_path)
