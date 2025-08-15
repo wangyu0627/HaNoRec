@@ -3,6 +3,19 @@ Multimodal Large Language Models with Adaptive Preference Optimization for Seque
 
 # We’re working on releasing the code soon — Please stay tuned!
 
+## Model Architecture
+<img src='model.png' />
+
+## 🧰 Environment Setup for HaNoRec
+
+You can run the following command to download the codes faster:
+
+```bash
+conda create -y -n hanorec python=3.10
+conda activate hanorec
+pip install -r requirement.txt
+```
+
 ## 💡 Dataset Structure and Download
 
 You can download multimodal recommendation files in the following datasets:
