@@ -1,5 +1,5 @@
-# HaNoRec
-Multimodal Large Language Models with Adaptive Preference Optimization for Sequential Recommendation
+# [SIGIR 2026] HaNoRec: Multimodal Large Language Models with Adaptive Preference Optimization for Sequential Recommendation
+Yu Wang, Yanghui Yang*, Le Wu, Yi Zhang, Fei Liu and Richang Hong. [[Paper link]](https://dl.acm.org/doi/10.1145/3805712.3809590)
 
 ## Model Architecture
 <img src='model.png' />
