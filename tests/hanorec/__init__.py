@@ -1,0 +1,1 @@
+"""HaNoRec tests."""
